@@ -3,7 +3,7 @@ using Day29StateSensusProgram.StateSensus;
 namespace StateAnalyserTestDemo
 {
    
-    [TestClass]
+   [TestClass]
     public class UnitTest1
     {
         [TestMethod]
@@ -20,5 +20,38 @@ namespace StateAnalyserTestDemo
             // Assert
             Assert.AreEqual(expectedNumberOfRecords, actualNumberOfRecords);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoadDataFromCSV_ShouldThrowException_WhenIncorrectFileIsProvided()
+        {
+            // Arrange
+            string filePath = "C:\\Users\\Shiva027\\Desktop\\BridgeLabSolution\\Day29StateSensusProgram\\Day29StateSensusProgram\\StateSensus\\SampleFile.csv";
+            StateCensusAnalyser analyser = new StateCensusAnalyser(filePath);
+
+            // Act and Assert
+            analyser.LoadDataFromCSV();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void LoadDataFromCSV_ShouldThrowException_WhenDelimiterIsIncorrect()
+        {
+            // Arrange
+            string filePath = "C:\\Users\\Shiva027\\Desktop\\BridgeLabSolution\\Day29StateSensusProgram\\Day29StateSensusProgram\\StateSensus\\Book1.csv";
+            StateCensusAnalyser analyser = new StateCensusAnalyser(filePath);
+
+            // Act and Assert
+            try
+            {
+                analyser.LoadDataFromCSV(';'); // Use semicolon as delimiter instead of comma
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Caught exception: " + ex.Message);
+                throw;
+            }
+        }
+
     }
 }
